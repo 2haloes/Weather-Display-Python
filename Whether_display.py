@@ -30,9 +30,11 @@ class Window(ttk.Frame):
         self.currentSummeryText = tk.StringVar()
         self.currentSummeryText.set("Unknown")
 
+        # Day 0 variables
+
         # Widgets
 
-        # Current widgets
+        # Frames
         self.nowFrame = Frame(root)
         self.daysFrame = Frame(root)
         self.day0Frame = Frame(root)
@@ -40,18 +42,25 @@ class Window(ttk.Frame):
         self.day2Frame = Frame(root)
         self.day3Frame = Frame(root)
         self.day4Frame = Frame(root)
+
+        # Current widgets
         # textvariable automatically updates with the StringVar() it's assigned to
         self.timeLabel = ttk.Label(self.nowFrame, textvariable=self.timeText, font=("arial", 40, "bold")).grid()
-        # Setting the grid after creating the label keeps the refence open allowing the image to be changed later
         self.currentIcon = ttk.Label(self.nowFrame, image=self.currentPhotoImage)
         self.currentIcon.grid(column=0, row=1)
-        self.currentIconText = ttk.Label(self.nowFrame, textvariable=self.currentPhotoImageText, font=("arial", 21, "bold")).grid(column=0, row=2)
-        self.currentTemp = ttk.Label(self.nowFrame, textvariable=self.currentTempText, font=("arial", 58, "bold")).grid(column=0, row=3)
-        self.apparentTemp = ttk.Label(self.nowFrame, textvariable=self.apparentTempText, font=("arial", 12)).grid(column=0, row=4)
-        self.currentSummery = ttk.Label(self.nowFrame, textvariable=self.currentSummeryText, font=("arial", 10), wraplength=300).grid(column=0, row=5)
+        self.currentIconText = ttk.Label(self.nowFrame, textvariable=self.currentPhotoImageText, font=("arial", 21, "bold"))
+        self.currentIconText.grid(column=0, row=2)
+        self.currentTemp = ttk.Label(self.nowFrame, textvariable=self.currentTempText, font=("arial", 58, "bold"))
+        self.currentTemp.grid(column=0, row=3)
+        self.apparentTemp = ttk.Label(self.nowFrame, textvariable=self.apparentTempText, font=("arial", 12))
+        self.apparentTemp.grid(column=0, row=4)
+        self.currentSummery = ttk.Label(self.nowFrame, textvariable=self.currentSummeryText, font=("arial", 10), wraplength=300)
+        self.currentSummery.grid(column=0, row=5)
         self.poweredBy = ttk.Label(self.nowFrame, text="Powered By DarkSky", font=("arial", 8), foreground="white", cursor="hand2")
         self.poweredBy.grid(column=0, row=6)
         self.poweredBy.bind("<Button-1>", openApiLink)
+
+        # Day 0 variables
 
         # Setting the frames
         self.nowFrame.grid()
