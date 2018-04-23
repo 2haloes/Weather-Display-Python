@@ -31,6 +31,9 @@ class Window(ttk.Frame):
         self.currentSummeryText.set("Unknown")
 
         # Day 0 variables
+        self.day0NameText = tk.StringVar()
+        self.day0NameText.set("Nul")
+        self.day0PhotoImage = PhotoImage(file="images_small/cloudy.png")
 
         # Widgets
 
@@ -45,11 +48,12 @@ class Window(ttk.Frame):
 
         # Current widgets
         # textvariable automatically updates with the StringVar() it's assigned to
-        self.timeLabel = ttk.Label(self.nowFrame, textvariable=self.timeText, font=("arial", 40, "bold")).grid()
-        self.currentIcon = ttk.Label(self.nowFrame, image=self.currentPhotoImage)
-        self.currentIcon.grid(column=0, row=1)
-        self.currentIconText = ttk.Label(self.nowFrame, textvariable=self.currentPhotoImageText, font=("arial", 21, "bold"))
-        self.currentIconText.grid(column=0, row=2)
+        self.timeLabel = ttk.Label(self.nowFrame, textvariable=self.timeText, font=("arial", 40, "bold"))
+        self.timeLabel.grid()
+        self.currentPhoto = ttk.Label(self.nowFrame, image=self.currentPhotoImage)
+        self.currentPhoto.grid(column=0, row=1)
+        self.currentPhotoText = ttk.Label(self.nowFrame, textvariable=self.currentPhotoImageText, font=("arial", 21, "bold"))
+        self.currentPhotoText.grid(column=0, row=2)
         self.currentTemp = ttk.Label(self.nowFrame, textvariable=self.currentTempText, font=("arial", 58, "bold"))
         self.currentTemp.grid(column=0, row=3)
         self.apparentTemp = ttk.Label(self.nowFrame, textvariable=self.apparentTempText, font=("arial", 12))
@@ -60,10 +64,16 @@ class Window(ttk.Frame):
         self.poweredBy.grid(column=0, row=6)
         self.poweredBy.bind("<Button-1>", openApiLink)
 
-        # Day 0 variables
+        # Day 0 widgets
+        self.day0Name = ttk.Label(self.day0Frame, textvariable=self.day0NameText, font=("arial", 12, "bold"))
+        self.day0Name.grid()
+        self.day0Photo = ttk.Label(self.nowFrame, image=self.day0PhotoImage)
+        self.day0Photo.grid(column=1, rowspan=2)
+
 
         # Setting the frames
-        self.nowFrame.grid()
+        self.nowFrame.place(x=0, y=0)
+        self.day0Frame.place(x=275)
 
 
         
@@ -85,11 +95,16 @@ def VarSet():
     # Current values
     # Update the image by updating the variable then the label
     app.currentPhotoImage = PhotoImage(file="images/wind.png")
-    app.currentIcon.configure(image=app.currentPhotoImage)
+    app.currentPhoto.configure(image=app.currentPhotoImage)
     app.currentTempText.set("888.88")
     app.apparentTempText.set("(888.88)")
     app.currentPhotoImageText.set("Not null")
     app.currentSummeryText.set("There may be rain within the hour, more details will be coming soon, please wait")
+
+    #Day0 values
+    app.day0NameText.set("Tue")
+    app.day0PhotoImage = PhotoImage(file="images_small/wind.png")
+    app.day0Photo.configure(image=app.currentPhotoImage)
 
 def openApiLink(event):
     webbrowser.open("https://darksky.net/poweredby/")
