@@ -266,14 +266,24 @@ def DisUpdate():
 
 def VarSet():
     app.loopcount = -1
+    # This attempts to get the data, if it fails, it tries again on the next loop around
+    try:
+        content = json.loads(open("darksky_file.json").read())
+        tempMeasurement = ""
+        if content["flags"]["units"] == "us":
+            tempMeasurement = "°F"
+        else:
+            tempMeasurement = "°C"
+    except:
+        return
     # Current values
     # Update the image by updating the variable then the label
-    app.currentPhotoImage = PhotoImage(file="images/wind.png")
+    app.currentPhotoImage = PhotoImage(file="images/"+ content["currently"]["icon"] +".png")
     app.currentPhoto.configure(image=app.currentPhotoImage)
-    app.currentTempText.set("888.88")
-    app.apparentTempText.set("(888.88)")
-    app.currentPhotoImageText.set("Not null")
-    app.currentSummeryText.set("There may be rain within the hour, more details will be coming soon, please wait")
+    app.currentTempText.set(str(round(content["currently"]["temperature"],1)) + tempMeasurement)
+    app.apparentTempText.set(str(round(content["currently"]["apparentTemperature"],1)) + tempMeasurement)
+    app.currentPhotoImageText.set(content["currently"]["icon"])
+    app.currentSummeryText.set(content["minutely"]["summary"])
 
     #Day0 values
     app.day0NameText.set("Tue")
