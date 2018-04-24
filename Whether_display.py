@@ -34,17 +34,41 @@ class Window(ttk.Frame):
         self.day0NameText = tk.StringVar()
         self.day0NameText.set("Nul")
         self.day0PhotoImage = PhotoImage(file="images_small/cloudy.png")
+        self.day0MinText = tk.StringVar()
+        self.day0MinText.set("Min:\n00")
+        self.day0MaxText = tk.StringVar()
+        self.day0MaxText.set("Max:\n00")
+
+        # Day 1 variables
+        self.day1NameText = tk.StringVar()
+        self.day1NameText.set("Nul")
+        self.day1PhotoImage = PhotoImage(file="images_small/cloudy.png")
+
+        # Day 2 variables
+        self.day2NameText = tk.StringVar()
+        self.day2NameText.set("Nul")
+        self.day2PhotoImage = PhotoImage(file="images_small/cloudy.png")
+
+        # Day 3 variables
+        self.day3NameText = tk.StringVar()
+        self.day3NameText.set("Nul")
+        self.day3PhotoImage = PhotoImage(file="images_small/cloudy.png")
+
+        # Day 4 variables
+        self.day4NameText = tk.StringVar()
+        self.day4NameText.set("Nul")
+        self.day4PhotoImage = PhotoImage(file="images_small/cloudy.png")
 
         # Widgets
 
         # Frames
         self.nowFrame = Frame(root)
         self.daysFrame = Frame(root)
-        self.day0Frame = Frame(root)
-        self.day1Frame = Frame(root)
-        self.day2Frame = Frame(root)
-        self.day3Frame = Frame(root)
-        self.day4Frame = Frame(root)
+        self.day0Frame = Frame(self.daysFrame)
+        self.day1Frame = Frame(self.daysFrame)
+        self.day2Frame = Frame(self.daysFrame)
+        self.day3Frame = Frame(self.daysFrame)
+        self.day4Frame = Frame(self.daysFrame)
 
         # Current widgets
         # textvariable automatically updates with the StringVar() it's assigned to
@@ -67,13 +91,46 @@ class Window(ttk.Frame):
         # Day 0 widgets
         self.day0Name = ttk.Label(self.day0Frame, textvariable=self.day0NameText, font=("arial", 12, "bold"))
         self.day0Name.grid()
-        self.day0Photo = ttk.Label(self.nowFrame, image=self.day0PhotoImage)
-        self.day0Photo.grid(column=1, rowspan=2)
+        self.day0Photo = ttk.Label(self.day0Frame, image=self.day0PhotoImage)
+        self.day0Photo.grid(column=1, row=1)
+        self.day0Max = ttk.Label(self.day0Frame, textvariable=self.day0MaxText, font=("arial", 18, "bold"))
+        self.day0Max.grid(column=2, row=1, padx=10)
+        self.day0Min = ttk.Label(self.day0Frame, textvariable=self.day0MinText, font=("arial", 18, "bold"))
+        self.day0Min.grid(column=3, row=1, padx=10)
+
+        # Day 1 widgets
+        self.day1Name = ttk.Label(self.day1Frame, textvariable=self.day1NameText, font=("arial", 12, "bold"))
+        self.day1Name.grid()
+        self.day1Photo = ttk.Label(self.day1Frame, image=self.day1PhotoImage)
+        self.day1Photo.grid(column=1)
+
+        # Day 2 widgets
+        self.day2Name = ttk.Label(self.day2Frame, textvariable=self.day2NameText, font=("arial", 12, "bold"))
+        self.day2Name.grid()
+        self.day2Photo = ttk.Label(self.day2Frame, image=self.day2PhotoImage)
+        self.day2Photo.grid(column=1)
+
+        # Day 3 widgets
+        self.day3Name = ttk.Label(self.day3Frame, textvariable=self.day3NameText, font=("arial", 12, "bold"))
+        self.day3Name.grid()
+        self.day3Photo = ttk.Label(self.day3Frame, image=self.day3PhotoImage)
+        self.day3Photo.grid(column=1)
+
+        # Day 4 widgets
+        self.day4Name = ttk.Label(self.day4Frame, textvariable=self.day4NameText, font=("arial", 12, "bold"))
+        self.day4Name.grid()
+        self.day4Photo = ttk.Label(self.day4Frame, image=self.day4PhotoImage)
+        self.day4Photo.grid(column=1)
 
 
         # Setting the frames
-        self.nowFrame.place(x=0, y=0)
-        self.day0Frame.place(x=275)
+        self.nowFrame.pack(side="left")
+        self.daysFrame.pack(side="right", expand="true", fill="x")
+        self.day0Frame.grid()
+        self.day1Frame.grid(row=1)
+        self.day2Frame.grid(row=2)
+        self.day3Frame.grid(row=3)
+        self.day4Frame.grid(row=4)
 
 
         
@@ -104,7 +161,29 @@ def VarSet():
     #Day0 values
     app.day0NameText.set("Tue")
     app.day0PhotoImage = PhotoImage(file="images_small/wind.png")
-    app.day0Photo.configure(image=app.currentPhotoImage)
+    app.day0Photo.configure(image=app.day0PhotoImage)
+    app.day0MinText.set("Min:\n55")
+    app.day0MaxText.set("Max:\n55")
+
+    #Day1 values
+    app.day1NameText.set("Wed")
+    app.day1PhotoImage = PhotoImage(file="images_small/wind.png")
+    app.day1Photo.configure(image=app.day1PhotoImage)
+
+    #Day2 values
+    app.day2NameText.set("Thr")
+    app.day2PhotoImage = PhotoImage(file="images_small/wind.png")
+    app.day2Photo.configure(image=app.day2PhotoImage)
+
+    #Day3 values
+    app.day3NameText.set("Fri")
+    app.day3PhotoImage = PhotoImage(file="images_small/wind.png")
+    app.day3Photo.configure(image=app.day3PhotoImage)
+
+    #Day4 values
+    app.day4NameText.set("Sat")
+    app.day4PhotoImage = PhotoImage(file="images_small/wind.png")
+    app.day4Photo.configure(image=app.day4PhotoImage)
 
 def openApiLink(event):
     webbrowser.open("https://darksky.net/poweredby/")
