@@ -269,7 +269,8 @@ def VarSet():
     app.loopcount = -1
     # This attempts to get the data, if it fails, it tries again on the next loop around
     try:
-        content = json.loads(open("darksky_file.json").read())
+        #content = json.loads(open("darksky_file.json").read())
+        content = json.loads(requests.get("https://api.darksky.net/forecast/" + DarkSkyConfig.ApiKey + "/" + DarkSkyConfig.Lat + "," + DarkSkyConfig.Long + "?units=" + DarkSkyConfig.Units).text)
         tempMeasurement = ""
         roundto = 0
         if content["flags"]["units"] == "us":
@@ -351,9 +352,3 @@ root.minsize(800,480)
 # Loads the DisUpdate function after loading the window
 root.after(5000, DisUpdate)
 root.mainloop()
-
-
-
-#content = json.loads(requests.get("https://api.darksky.net/forecast/a29d6bfa474ca4788425d6e0303f472e/50.852836,0.558773?units=si").text)
-#content = json.loads(open("darksky_file.json").read())
-#print(content["minutely"]["icon"])
