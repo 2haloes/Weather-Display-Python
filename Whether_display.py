@@ -1,3 +1,4 @@
+import datetime
 import glob
 import json
 import requests
@@ -163,7 +164,7 @@ class Window(ttk.Frame):
         self.day1Name = ttk.Label(self.day1Frame, textvariable=self.day1NameText, font=("arial", 12, "bold"))
         self.day1Name.grid()
         self.day1Photo = ttk.Label(self.day1Frame, image=self.day1PhotoImage)
-        self.day1Photo.grid(column=1)
+        self.day1Photo.grid(column=1, row=1, rowspan=2)
         self.day1Max = ttk.Label(self.day1Frame, textvariable=self.day1MaxText, font=("arial", 18, "bold"))
         self.day1Max.grid(column=2, row=1, padx=10, rowspan=2)
         self.day1Min = ttk.Label(self.day1Frame, textvariable=self.day1MinText, font=("arial", 18, "bold"))
@@ -183,7 +184,7 @@ class Window(ttk.Frame):
         self.day2Name = ttk.Label(self.day2Frame, textvariable=self.day2NameText, font=("arial", 12, "bold"))
         self.day2Name.grid()
         self.day2Photo = ttk.Label(self.day2Frame, image=self.day2PhotoImage)
-        self.day2Photo.grid(column=1)
+        self.day2Photo.grid(column=1, row=1, rowspan=2)
         self.day2Max = ttk.Label(self.day2Frame, textvariable=self.day2MaxText, font=("arial", 18, "bold"))
         self.day2Max.grid(column=2, row=1, padx=10, rowspan=2)
         self.day2Min = ttk.Label(self.day2Frame, textvariable=self.day2MinText, font=("arial", 18, "bold"))
@@ -203,7 +204,7 @@ class Window(ttk.Frame):
         self.day3Name = ttk.Label(self.day3Frame, textvariable=self.day3NameText, font=("arial", 12, "bold"))
         self.day3Name.grid()
         self.day3Photo = ttk.Label(self.day3Frame, image=self.day3PhotoImage)
-        self.day3Photo.grid(column=1)
+        self.day3Photo.grid(column=1, row=1, rowspan=2)
         self.day3Max = ttk.Label(self.day3Frame, textvariable=self.day3MaxText, font=("arial", 18, "bold"))
         self.day3Max.grid(column=2, row=1, padx=10, rowspan=2)
         self.day3Min = ttk.Label(self.day3Frame, textvariable=self.day3MinText, font=("arial", 18, "bold"))
@@ -223,7 +224,7 @@ class Window(ttk.Frame):
         self.day4Name = ttk.Label(self.day4Frame, textvariable=self.day4NameText, font=("arial", 12, "bold"))
         self.day4Name.grid()
         self.day4Photo = ttk.Label(self.day4Frame, image=self.day4PhotoImage)
-        self.day4Photo.grid(column=1)
+        self.day4Photo.grid(column=1, row=1, rowspan=2)
         self.day4Max = ttk.Label(self.day4Frame, textvariable=self.day4MaxText, font=("arial", 18, "bold"))
         self.day4Max.grid(column=2, row=1, padx=10, rowspan=2)
         self.day4Min = ttk.Label(self.day4Frame, textvariable=self.day4MinText, font=("arial", 18, "bold"))
@@ -270,70 +271,73 @@ def VarSet():
     try:
         content = json.loads(open("darksky_file.json").read())
         tempMeasurement = ""
+        roundto = 0
         if content["flags"]["units"] == "us":
             tempMeasurement = "°F"
+            roundto = 0
         else:
             tempMeasurement = "°C"
+            roundto = 1
     except:
         return
     # Current values
     # Update the image by updating the variable then the label
     app.currentPhotoImage = PhotoImage(file="images/"+ content["currently"]["icon"] +".png")
     app.currentPhoto.configure(image=app.currentPhotoImage)
-    app.currentTempText.set(str(round(content["currently"]["temperature"],1)) + tempMeasurement)
-    app.apparentTempText.set(str(round(content["currently"]["apparentTemperature"],1)) + tempMeasurement)
+    app.currentTempText.set(str(round(content["currently"]["temperature"],roundto)) + tempMeasurement)
+    app.apparentTempText.set(str(round(content["currently"]["apparentTemperature"],roundto)) + tempMeasurement)
     app.currentPhotoImageText.set(content["currently"]["icon"])
     app.currentSummeryText.set(content["minutely"]["summary"])
 
     #Day0 values
-    app.day0NameText.set("Tue")
-    app.day0PhotoImage = PhotoImage(file="images_small/wind.png")
+    app.day0NameText.set(datetime.datetime.fromtimestamp(content["daily"]["data"][0]["time"]).strftime("%a"))
+    app.day0PhotoImage = PhotoImage(file="images_small/" + content["daily"]["data"][0]["icon"] + ".png")
     app.day0Photo.configure(image=app.day0PhotoImage)
-    app.day0MinText.set("Min:\n55")
-    app.day0MaxText.set("Max:\n55")
-    app.day0RiseText.set("11:11")
-    app.day0SetText.set("11:11")
-    app.day0SummeryText.set("There may be rain within the hour, more details will be coming soon, please wait")
+    app.day0MinText.set("Min:\n" + str(round(content["daily"]["data"][0]["temperatureHigh"],roundto)))
+    app.day0MaxText.set("Max:\n" + str(round(content["daily"]["data"][0]["temperatureLow"],roundto)))
+    app.day0RiseText.set(datetime.datetime.fromtimestamp(content["daily"]["data"][0]["sunriseTime"]).strftime("%I:%M"))
+    app.day0SetText.set(datetime.datetime.fromtimestamp(content["daily"]["data"][0]["sunsetTime"]).strftime("%I:%M"))
+    app.day0SummeryText.set(content["daily"]["data"][0]["summary"])
 
     #Day1 values
-    app.day1NameText.set("Wed")
-    app.day1PhotoImage = PhotoImage(file="images_small/wind.png")
+    app.day1NameText.set(datetime.datetime.fromtimestamp(content["daily"]["data"][1]["time"]).strftime("%a"))
+    app.day1PhotoImage = PhotoImage(file="images_small/" + content["daily"]["data"][1]["icon"] + ".png")
     app.day1Photo.configure(image=app.day1PhotoImage)
-    app.day1MinText.set("Min:\n55")
-    app.day1MaxText.set("Max:\n55")
-    app.day1RiseText.set("11:11")
-    app.day1SetText.set("11:11")
-    app.day1SummeryText.set("There may be rain within the hour, more details will be coming soon, please wait")
+    app.day1MinText.set("Min:\n" + str(round(content["daily"]["data"][1]["temperatureHigh"],roundto)))
+    app.day1MaxText.set("Max:\n" + str(round(content["daily"]["data"][1]["temperatureLow"],roundto)))
+    app.day1RiseText.set(datetime.datetime.fromtimestamp(content["daily"]["data"][1]["sunriseTime"]).strftime("%I:%M"))
+    app.day1SetText.set(datetime.datetime.fromtimestamp(content["daily"]["data"][1]["sunsetTime"]).strftime("%I:%M"))
+    app.day1SummeryText.set(content["daily"]["data"][1]["summary"])
 
     #Day2 values
-    app.day2NameText.set("Thr")
-    app.day2PhotoImage = PhotoImage(file="images_small/wind.png")
+    app.day2NameText.set(datetime.datetime.fromtimestamp(content["daily"]["data"][2]["time"]).strftime("%a"))
+    app.day2PhotoImage = PhotoImage(file="images_small/" + content["daily"]["data"][2]["icon"] + ".png")
     app.day2Photo.configure(image=app.day2PhotoImage)
-    app.day2MinText.set("Min:\n55")
-    app.day2MaxText.set("Max:\n55")
-    app.day2RiseText.set("11:11")
-    app.day2SetText.set("11:11")
-    app.day2SummeryText.set("There may be rain within the hour, more details will be coming soon, please wait")
+    app.day2MinText.set("Min:\n" + str(round(content["daily"]["data"][2]["temperatureHigh"],roundto)))
+    app.day2MaxText.set("Max:\n" + str(round(content["daily"]["data"][2]["temperatureLow"],roundto)))
+    app.day2RiseText.set(datetime.datetime.fromtimestamp(content["daily"]["data"][2]["sunriseTime"]).strftime("%I:%M"))
+    app.day2SetText.set(datetime.datetime.fromtimestamp(content["daily"]["data"][2]["sunsetTime"]).strftime("%I:%M"))
+    app.day2SummeryText.set(content["daily"]["data"][2]["summary"])
 
     #Day3 values
-    app.day3NameText.set("Fri")
-    app.day3PhotoImage = PhotoImage(file="images_small/wind.png")
+    app.day3NameText.set(datetime.datetime.fromtimestamp(content["daily"]["data"][3]["time"]).strftime("%a"))
+    app.day3PhotoImage = PhotoImage(file="images_small/" + content["daily"]["data"][3]["icon"] + ".png")
     app.day3Photo.configure(image=app.day3PhotoImage)
-    app.day3MinText.set("Min:\n55")
-    app.day3MaxText.set("Max:\n55")
-    app.day3RiseText.set("11:11")
-    app.day3SetText.set("11:11")
-    app.day3SummeryText.set("There may be rain within the hour, more details will be coming soon, please wait")
+    app.day3MinText.set("Min:\n" + str(round(content["daily"]["data"][3]["temperatureHigh"],roundto)))
+    app.day3MaxText.set("Max:\n" + str(round(content["daily"]["data"][3]["temperatureLow"],roundto)))
+    app.day3RiseText.set(datetime.datetime.fromtimestamp(content["daily"]["data"][3]["sunriseTime"]).strftime("%I:%M"))
+    app.day3SetText.set(datetime.datetime.fromtimestamp(content["daily"]["data"][3]["sunsetTime"]).strftime("%I:%M"))
+    app.day3SummeryText.set(content["daily"]["data"][3]["summary"])
 
     #Day4 values
-    app.day4NameText.set("Sat")
-    app.day4PhotoImage = PhotoImage(file="images_small/wind.png")
+    app.day4NameText.set(datetime.datetime.fromtimestamp(content["daily"]["data"][4]["time"]).strftime("%a"))
+    app.day4PhotoImage = PhotoImage(file="images_small/" + content["daily"]["data"][4]["icon"] + ".png")
     app.day4Photo.configure(image=app.day4PhotoImage)
-    app.day4MinText.set("Min:\n55")
-    app.day4MaxText.set("Max:\n55")
-    app.day4RiseText.set("11:11")
-    app.day4SetText.set("11:11")
-    app.day4SummeryText.set("There may be rain within the hour, more details will be coming soon, please wait")
+    app.day4MinText.set("Min:\n" + str(round(content["daily"]["data"][4]["temperatureHigh"],roundto)))
+    app.day4MaxText.set("Max:\n" + str(round(content["daily"]["data"][4]["temperatureLow"],roundto)))
+    app.day4RiseText.set(datetime.datetime.fromtimestamp(content["daily"]["data"][4]["sunriseTime"]).strftime("%I:%M"))
+    app.day4SetText.set(datetime.datetime.fromtimestamp(content["daily"]["data"][4]["sunsetTime"]).strftime("%I:%M"))
+    app.day4SummeryText.set(content["daily"]["data"][4]["summary"])
 
 def openApiLink(event):
     webbrowser.open("https://darksky.net/poweredby/")
