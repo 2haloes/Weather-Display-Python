@@ -3,6 +3,8 @@ import glob
 import json
 import requests
 import sched
+import sys
+from sys import argv
 import time
 import tkinter as tk
 from tkinter import ttk, PhotoImage, Frame
@@ -347,8 +349,11 @@ def openApiLink(event):
 root = tk.Tk()
 app = Window(root)
 app.master.title("Weather Display")
-app.master.geometry("800x480")
-root.minsize(800,480)
+if "-f" in argv:
+    root.attributes("-fullscreen", True)
+else:
+    app.master.geometry("800x480")
+    root.minsize(800,480)
 # Loads the DisUpdate function after loading the window
 root.after(5000, DisUpdate)
 root.mainloop()
