@@ -1,8 +1,7 @@
 import datetime
-import glob
 import json
+import os
 import requests
-import sched
 import sys
 from sys import argv
 import time
@@ -18,6 +17,7 @@ class Window(ttk.Frame):
         ttk.Frame.__init__(self, master)               
         self.master = master
         self.loopcount = 24
+        os.chdir(os.path.dirname(os.path.realpath(__file__)))
         # Variables to use
 
         # Current variables
