@@ -253,7 +253,7 @@ class Window(ttk.Frame):
         self.day4Frame.grid(row=4)
 
         #Setting the background colour for all elements
-        self.frameList = [self.nowFrame, self.day0Frame, self.day1Frame, self.day2Frame, self.day3Frame, self.day4Frame]
+        self.frameList = [self.nowFrame, self.daysFrame, self.day0Frame, self.day1Frame, self.day2Frame, self.day3Frame, self.day4Frame]
         for currentframe in self.frameList:
             currentframe.configure(background="cyan")
             for currentWidget in currentframe.winfo_children():
@@ -358,7 +358,7 @@ if "-f" in argv:
 else:
     app.master.geometry("800x480")
     root.minsize(800,480)
-    root.configure(background="cyan")
 # Loads the DisUpdate function after loading the window
 root.after(5000, DisUpdate)
+root.configure(background="cyan")
 root.mainloop()
