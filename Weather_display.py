@@ -245,16 +245,20 @@ class Window(ttk.Frame):
 
         # Setting the frames
         self.nowFrame.pack(side="left")
-        self.daysFrame.pack(side="right", expand="true", fill="x")
+        self.daysFrame.pack(side="right", expand="true")
         self.day0Frame.grid()
         self.day1Frame.grid(row=1)
         self.day2Frame.grid(row=2)
         self.day3Frame.grid(row=3)
         self.day4Frame.grid(row=4)
 
+        #Setting the background colour for all elements
+        self.frameList = [self.nowFrame, self.day0Frame, self.day1Frame, self.day2Frame, self.day3Frame, self.day4Frame]
+        for currentframe in self.frameList:
+            currentframe.configure(background="cyan")
+            for currentWidget in currentframe.winfo_children():
+                currentWidget.configure(background="cyan")
 
-        
-      
 
 def DisUpdate():
     if app.loopcount == 24:
@@ -296,8 +300,8 @@ def VarSet():
     app.day0NameText.set(datetime.datetime.fromtimestamp(content["daily"]["data"][0]["time"]).strftime("%a"))
     app.day0PhotoImage = PhotoImage(file="images_small/" + content["daily"]["data"][0]["icon"] + ".png")
     app.day0Photo.configure(image=app.day0PhotoImage)
-    app.day0MinText.set("Min:\n" + str(round(content["daily"]["data"][0]["temperatureHigh"],roundto)))
-    app.day0MaxText.set("Max:\n" + str(round(content["daily"]["data"][0]["temperatureLow"],roundto)))
+    app.day0MinText.set("Min:\n" + str(round(content["daily"]["data"][0]["temperatureLow"],roundto)))
+    app.day0MaxText.set("Max:\n" + str(round(content["daily"]["data"][0]["temperatureHigh"],roundto)))
     app.day0RiseText.set(datetime.datetime.fromtimestamp(content["daily"]["data"][0]["sunriseTime"]).strftime("%I:%M"))
     app.day0SetText.set(datetime.datetime.fromtimestamp(content["daily"]["data"][0]["sunsetTime"]).strftime("%I:%M"))
     app.day0SummeryText.set(content["daily"]["data"][0]["summary"])
@@ -306,8 +310,8 @@ def VarSet():
     app.day1NameText.set(datetime.datetime.fromtimestamp(content["daily"]["data"][1]["time"]).strftime("%a"))
     app.day1PhotoImage = PhotoImage(file="images_small/" + content["daily"]["data"][1]["icon"] + ".png")
     app.day1Photo.configure(image=app.day1PhotoImage)
-    app.day1MinText.set("Min:\n" + str(round(content["daily"]["data"][1]["temperatureHigh"],roundto)))
-    app.day1MaxText.set("Max:\n" + str(round(content["daily"]["data"][1]["temperatureLow"],roundto)))
+    app.day1MinText.set("Min:\n" + str(round(content["daily"]["data"][1]["temperatureLow"],roundto)))
+    app.day1MaxText.set("Max:\n" + str(round(content["daily"]["data"][1]["temperatureHigh"],roundto)))
     app.day1RiseText.set(datetime.datetime.fromtimestamp(content["daily"]["data"][1]["sunriseTime"]).strftime("%I:%M"))
     app.day1SetText.set(datetime.datetime.fromtimestamp(content["daily"]["data"][1]["sunsetTime"]).strftime("%I:%M"))
     app.day1SummeryText.set(content["daily"]["data"][1]["summary"])
@@ -316,8 +320,8 @@ def VarSet():
     app.day2NameText.set(datetime.datetime.fromtimestamp(content["daily"]["data"][2]["time"]).strftime("%a"))
     app.day2PhotoImage = PhotoImage(file="images_small/" + content["daily"]["data"][2]["icon"] + ".png")
     app.day2Photo.configure(image=app.day2PhotoImage)
-    app.day2MinText.set("Min:\n" + str(round(content["daily"]["data"][2]["temperatureHigh"],roundto)))
-    app.day2MaxText.set("Max:\n" + str(round(content["daily"]["data"][2]["temperatureLow"],roundto)))
+    app.day2MinText.set("Min:\n" + str(round(content["daily"]["data"][2]["temperatureLow"],roundto)))
+    app.day2MaxText.set("Max:\n" + str(round(content["daily"]["data"][2]["temperatureHigh"],roundto)))
     app.day2RiseText.set(datetime.datetime.fromtimestamp(content["daily"]["data"][2]["sunriseTime"]).strftime("%I:%M"))
     app.day2SetText.set(datetime.datetime.fromtimestamp(content["daily"]["data"][2]["sunsetTime"]).strftime("%I:%M"))
     app.day2SummeryText.set(content["daily"]["data"][2]["summary"])
@@ -326,8 +330,8 @@ def VarSet():
     app.day3NameText.set(datetime.datetime.fromtimestamp(content["daily"]["data"][3]["time"]).strftime("%a"))
     app.day3PhotoImage = PhotoImage(file="images_small/" + content["daily"]["data"][3]["icon"] + ".png")
     app.day3Photo.configure(image=app.day3PhotoImage)
-    app.day3MinText.set("Min:\n" + str(round(content["daily"]["data"][3]["temperatureHigh"],roundto)))
-    app.day3MaxText.set("Max:\n" + str(round(content["daily"]["data"][3]["temperatureLow"],roundto)))
+    app.day3MinText.set("Min:\n" + str(round(content["daily"]["data"][3]["temperatureLow"],roundto)))
+    app.day3MaxText.set("Max:\n" + str(round(content["daily"]["data"][3]["temperatureHigh"],roundto)))
     app.day3RiseText.set(datetime.datetime.fromtimestamp(content["daily"]["data"][3]["sunriseTime"]).strftime("%I:%M"))
     app.day3SetText.set(datetime.datetime.fromtimestamp(content["daily"]["data"][3]["sunsetTime"]).strftime("%I:%M"))
     app.day3SummeryText.set(content["daily"]["data"][3]["summary"])
@@ -336,8 +340,8 @@ def VarSet():
     app.day4NameText.set(datetime.datetime.fromtimestamp(content["daily"]["data"][4]["time"]).strftime("%a"))
     app.day4PhotoImage = PhotoImage(file="images_small/" + content["daily"]["data"][4]["icon"] + ".png")
     app.day4Photo.configure(image=app.day4PhotoImage)
-    app.day4MinText.set("Min:\n" + str(round(content["daily"]["data"][4]["temperatureHigh"],roundto)))
-    app.day4MaxText.set("Max:\n" + str(round(content["daily"]["data"][4]["temperatureLow"],roundto)))
+    app.day4MinText.set("Min:\n" + str(round(content["daily"]["data"][4]["temperatureLow"],roundto)))
+    app.day4MaxText.set("Max:\n" + str(round(content["daily"]["data"][4]["temperatureHigh"],roundto)))
     app.day4RiseText.set(datetime.datetime.fromtimestamp(content["daily"]["data"][4]["sunriseTime"]).strftime("%I:%M"))
     app.day4SetText.set(datetime.datetime.fromtimestamp(content["daily"]["data"][4]["sunsetTime"]).strftime("%I:%M"))
     app.day4SummeryText.set(content["daily"]["data"][4]["summary"])
@@ -354,6 +358,7 @@ if "-f" in argv:
 else:
     app.master.geometry("800x480")
     root.minsize(800,480)
+    root.configure(background="cyan")
 # Loads the DisUpdate function after loading the window
 root.after(5000, DisUpdate)
 root.mainloop()
