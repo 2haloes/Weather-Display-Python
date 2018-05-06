@@ -8,8 +8,10 @@ import time
 import tkinter as tk
 from tkinter import ttk, PhotoImage, Frame
 import webbrowser
-# This loads the DarkSkyConfig.py values
+# This loads the config values from other python files
 import DarkSkyConfig
+import Weather_Display_Config as ConfigSet
+
 
 class Window(ttk.Frame):
 
@@ -255,9 +257,9 @@ class Window(ttk.Frame):
         #Setting the background colour for all elements
         self.frameList = [self.nowFrame, self.daysFrame, self.day0Frame, self.day1Frame, self.day2Frame, self.day3Frame, self.day4Frame]
         for currentframe in self.frameList:
-            currentframe.configure(background="cyan")
+            currentframe.configure(background=ConfigSet.BGColor)
             for currentWidget in currentframe.winfo_children():
-                currentWidget.configure(background="cyan")
+                currentWidget.configure(background=ConfigSet.BGColor)
 
 
 def DisUpdate():
@@ -360,5 +362,5 @@ else:
     root.minsize(800,480)
 # Loads the DisUpdate function after loading the window
 root.after(5000, DisUpdate)
-root.configure(background="cyan")
+root.configure(background=ConfigSet.BGColor)
 root.mainloop()
