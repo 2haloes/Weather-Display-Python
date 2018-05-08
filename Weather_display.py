@@ -12,6 +12,11 @@ import webbrowser
 import DarkSkyConfig
 import Weather_Display_Config as ConfigSet
 
+fileExt = "png"
+try:
+    disposable = PhotoImage(file="images/cloudy.png")
+except:
+    fileExt = "gif"
 
 class Window(ttk.Frame):
 
@@ -25,7 +30,7 @@ class Window(ttk.Frame):
         # Current variables
         self.timeText = tk.StringVar()
         self.timeText.set("00:00AM")
-        self.currentPhotoImage = PhotoImage(file="images/cloudy.png")
+        self.currentPhotoImage = PhotoImage(file="images/cloudy." + fileExt)
         self.currentPhotoImageText = tk.StringVar()
         self.currentPhotoImageText.set("Null")
         self.currentTempText = tk.StringVar()
@@ -36,8 +41,8 @@ class Window(ttk.Frame):
         self.currentSummaryText.set("Unknown")
 
         # Sun rise/set vars
-        self.risePhotoImage = PhotoImage(file="images_small/sun-rise.png")
-        self.setPhotoImage = PhotoImage(file="images_small/sun-set.png")
+        self.risePhotoImage = PhotoImage(file="images_small/sun-rise." + fileExt)
+        self.setPhotoImage = PhotoImage(file="images_small/sun-set." + fileExt)
 
         # Day vars condenced
         self.daysVars = {}
@@ -45,7 +50,7 @@ class Window(ttk.Frame):
             self.daysVars["day" + str(i)] = {}
             self.daysVars["day" + str(i)]["NameText"] = tk.StringVar()
             self.daysVars["day" + str(i)]["NameText"].set("Nul")
-            self.daysVars["day" + str(i)]["PhotoImage"] = PhotoImage(file="images_small/cloudy.png")
+            self.daysVars["day" + str(i)]["PhotoImage"] = PhotoImage(file="images_small/cloudy." + fileExt)
             self.daysVars["day" + str(i)]["MinText"] = tk.StringVar()
             self.daysVars["day" + str(i)]["MinText"].set("Min:\n00")
             self.daysVars["day" + str(i)]["MaxText"] = tk.StringVar()
@@ -154,7 +159,7 @@ def VarSet():
         return
     # Current values
     # Update the image by updating the variable then the label
-    app.currentPhotoImage = PhotoImage(file="images/"+ content["currently"]["icon"] +".png")
+    app.currentPhotoImage = PhotoImage(file="images/"+ content["currently"]["icon"] +"." + fileExt)
     app.currentPhoto.configure(image=app.currentPhotoImage)
     app.currentTempText.set(str(round(content["currently"]["temperature"],roundto)) + tempMeasurement)
     app.apparentTempText.set(str(round(content["currently"]["apparentTemperature"],roundto)) + tempMeasurement)
@@ -164,7 +169,7 @@ def VarSet():
     # Day values condenced
     for i in range(0, 5):
         app.daysVars["day" + str(i)]["NameText"].set(datetime.datetime.fromtimestamp(content["daily"]["data"][i]["time"]).strftime("%a"))
-        app.daysVars["day" + str(i)]["PhotoImage"] = PhotoImage(file="images_small/" + content["daily"]["data"][i]["icon"] + ".png")
+        app.daysVars["day" + str(i)]["PhotoImage"] = PhotoImage(file="images_small/" + content["daily"]["data"][i]["icon"] + "." + fileExt)
         app.daysWidgetCollection["day" + str(i)]["Photo"].configure(image=app.daysVars["day" + str(i)]["PhotoImage"])
         app.daysVars["day" + str(i)]["MinText"].set("Min:\n" + str(round(content["daily"]["data"][i]["temperatureLow"],roundto)))
         app.daysVars["day" + str(i)]["MaxText"].set("Max:\n" + str(round(content["daily"]["data"][i]["temperatureHigh"],roundto)))
