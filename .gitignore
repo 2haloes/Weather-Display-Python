@@ -102,3 +102,6 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+# Stop config with API key copying upstream
+DarkSkyConfig.py
