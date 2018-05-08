@@ -32,12 +32,30 @@ class Window(ttk.Frame):
         self.currentTempText.set("0.0")
         self.apparentTempText = tk.StringVar()
         self.apparentTempText.set("(0.0)")
-        self.currentSummeryText = tk.StringVar()
-        self.currentSummeryText.set("Unknown")
+        self.currentSummaryText = tk.StringVar()
+        self.currentSummaryText.set("Unknown")
 
         # Sun rise/set vars
         self.risePhotoImage = PhotoImage(file="images_small/sun-rise.png")
         self.setPhotoImage = PhotoImage(file="images_small/sun-set.png")
+
+        # Day vars condenced
+        self.daysVars = {}
+        for i in range(0, 5):
+            self.daysVars["day" + i] = {}
+            self.daysVars["day" + i]["NameText"] = tk.StringVar()
+            self.daysVars["day" + i]["NameText"].set("Nul")
+            self.daysVars["day" + i]["PhotoImage"] = PhotoImage(file="images_small/cloudy.png")
+            self.daysVars["day" + i]["MinText"] = tk.StringVar()
+            self.daysVars["day" + i]["MinText"].set("Min:\n00")
+            self.daysVars["day" + i]["MaxText"] = tk.StringVar()
+            self.daysVars["day" + i]["MaxText"].set("Max:\n00")
+            self.daysVars["day" + i]["RiseText"] = tk.StringVar()
+            self.daysVars["day" + i]["RiseText"].set("00:00")
+            self.daysVars["day" + i]["SetText"] = tk.StringVar()
+            self.daysVars["day" + i]["SetText"].set("00:00")
+            self.daysVars["day" + i]["SummaryText"] = tk.StringVar()
+            self.daysVars["day" + i]["SummaryText"].set("Unknown")
 
         # Day 0 variables
         self.day0NameText = tk.StringVar()
@@ -51,8 +69,8 @@ class Window(ttk.Frame):
         self.day0RiseText.set("00:00")
         self.day0SetText = tk.StringVar()
         self.day0SetText.set("00:00")
-        self.day0SummeryText = tk.StringVar()
-        self.day0SummeryText.set("Unknown")
+        self.day0SummaryText = tk.StringVar()
+        self.day0SummaryText.set("Unknown")
 
         # Day 1 variables
         self.day1NameText = tk.StringVar()
@@ -66,8 +84,8 @@ class Window(ttk.Frame):
         self.day1RiseText.set("00:00")
         self.day1SetText = tk.StringVar()
         self.day1SetText.set("00:00")
-        self.day1SummeryText = tk.StringVar()
-        self.day1SummeryText.set("Unknown")
+        self.day1SummaryText = tk.StringVar()
+        self.day1SummaryText.set("Unknown")
         
 
         # Day 2 variables
@@ -82,8 +100,8 @@ class Window(ttk.Frame):
         self.day2RiseText.set("00:00")
         self.day2SetText = tk.StringVar()
         self.day2SetText.set("00:00")
-        self.day2SummeryText = tk.StringVar()
-        self.day2SummeryText.set("Unknown")
+        self.day2SummaryText = tk.StringVar()
+        self.day2SummaryText.set("Unknown")
 
         # Day 3 variables
         self.day3NameText = tk.StringVar()
@@ -97,8 +115,8 @@ class Window(ttk.Frame):
         self.day3RiseText.set("00:00")
         self.day3SetText = tk.StringVar()
         self.day3SetText.set("00:00")
-        self.day3SummeryText = tk.StringVar()
-        self.day3SummeryText.set("Unknown")
+        self.day3SummaryText = tk.StringVar()
+        self.day3SummaryText.set("Unknown")
 
         # Day 4 variables
         self.day4NameText = tk.StringVar()
@@ -112,14 +130,16 @@ class Window(ttk.Frame):
         self.day4RiseText.set("00:00")
         self.day4SetText = tk.StringVar()
         self.day4SetText.set("00:00")
-        self.day4SummeryText = tk.StringVar()
-        self.day4SummeryText.set("Unknown")
+        self.day4SummaryText = tk.StringVar()
+        self.day4SummaryText.set("Unknown")
 
         # Widgets
 
         # Frames
         self.nowFrame = Frame(root)
         self.daysFrame = Frame(root)
+        self.daysFrameCollection = {}
+        self.daysWidgetCollection = {}
         self.day0Frame = Frame(self.daysFrame)
         self.day1Frame = Frame(self.daysFrame)
         self.day2Frame = Frame(self.daysFrame)
@@ -138,11 +158,35 @@ class Window(ttk.Frame):
         self.currentTemp.grid(column=0, row=3)
         self.apparentTemp = ttk.Label(self.nowFrame, textvariable=self.apparentTempText, font=("arial", 12))
         self.apparentTemp.grid(column=0, row=4)
-        self.currentSummery = ttk.Label(self.nowFrame, textvariable=self.currentSummeryText, font=("arial", 10), wraplength=300)
-        self.currentSummery.grid(column=0, row=5)
+        self.currentSummary = ttk.Label(self.nowFrame, textvariable=self.currentSummaryText, font=("arial", 10), wraplength=300)
+        self.currentSummary.grid(column=0, row=5)
         self.poweredBy = ttk.Label(self.nowFrame, text="Powered By DarkSky", font=("arial", 8), foreground="white", cursor="hand2")
         self.poweredBy.grid(column=0, row=6)
         self.poweredBy.bind("<Button-1>", openApiLink)
+
+        # Days widgets (condenced)
+        for i in range(0, 5):
+            self.daysFrameCollection["day" + i] = Frame(root)
+            self.daysWidgetCollection["day" + i] = {}
+            self.daysWidgetCollection["day" + i]["Name"] = ttk.Label(self.daysFrameCollection["day" + i], textvariable=self.daysVars["day" + i]["Name"], font=("arial", 12, "bold"))
+            self.daysWidgetCollection["day" + i]["Name"].grid()
+            self.daysWidgetCollection["day" + i]["Photo"] = ttk.Label(self.daysFrameCollection["day" + i], image=self.daysVars["day" + i]["PhotoImage"])
+            self.daysWidgetCollection["day" + i][""]
+            self.daysWidgetCollection["day" + i][""]
+            self.daysWidgetCollection["day" + i][""]
+            self.daysWidgetCollection["day" + i][""]
+            self.daysWidgetCollection["day" + i][""]
+            self.daysWidgetCollection["day" + i][""]
+            self.daysWidgetCollection["day" + i][""]
+            self.daysWidgetCollection["day" + i][""]
+            self.daysWidgetCollection["day" + i][""]
+            self.daysWidgetCollection["day" + i][""]
+            self.daysWidgetCollection["day" + i][""]
+            self.daysWidgetCollection["day" + i][""]
+            self.daysWidgetCollection["day" + i][""]
+            self.daysWidgetCollection["day" + i][""]
+            self.daysWidgetCollection["day" + i][""]
+
 
         # Day 0 widgets
         self.day0Name = ttk.Label(self.day0Frame, textvariable=self.day0NameText, font=("arial", 12, "bold"))
@@ -161,8 +205,8 @@ class Window(ttk.Frame):
         self.day0SetPhoto.grid(column=5, row=1, padx=5)
         self.day0Set = ttk.Label(self.day0Frame, textvariable=self.day0SetText, font=("arial", 18, "bold"))
         self.day0Set.grid(column=5, row=2, padx=5)
-        self.day0Summery = ttk.Label(self.day0Frame, textvariable=self.day0SummeryText, font=("arial", 8), wraplength=100)
-        self.day0Summery.grid(column=6, row=0, rowspan=3)
+        self.day0Summary = ttk.Label(self.day0Frame, textvariable=self.day0SummaryText, font=("arial", 8), wraplength=100)
+        self.day0Summary.grid(column=6, row=0, rowspan=3)
         
         # Day 1 widgets
         self.day1Name = ttk.Label(self.day1Frame, textvariable=self.day1NameText, font=("arial", 12, "bold"))
@@ -181,8 +225,8 @@ class Window(ttk.Frame):
         self.day1SetPhoto.grid(column=5, row=1, padx=5)
         self.day1Set = ttk.Label(self.day1Frame, textvariable=self.day1SetText, font=("arial", 18, "bold"))
         self.day1Set.grid(column=5, row=2, padx=5)
-        self.day1Summery = ttk.Label(self.day1Frame, textvariable=self.day1SummeryText, font=("arial", 8), wraplength=100)
-        self.day1Summery.grid(column=6, row=0, rowspan=3)
+        self.day1Summary = ttk.Label(self.day1Frame, textvariable=self.day1SummaryText, font=("arial", 8), wraplength=100)
+        self.day1Summary.grid(column=6, row=0, rowspan=3)
 
         # Day 2 widgets
         self.day2Name = ttk.Label(self.day2Frame, textvariable=self.day2NameText, font=("arial", 12, "bold"))
@@ -201,8 +245,8 @@ class Window(ttk.Frame):
         self.day2SetPhoto.grid(column=5, row=1, padx=5)
         self.day2Set = ttk.Label(self.day2Frame, textvariable=self.day2SetText, font=("arial", 18, "bold"))
         self.day2Set.grid(column=5, row=2, padx=5)
-        self.day2Summery = ttk.Label(self.day2Frame, textvariable=self.day2SummeryText, font=("arial", 8), wraplength=100)
-        self.day2Summery.grid(column=6, row=0, rowspan=3)
+        self.day2Summary = ttk.Label(self.day2Frame, textvariable=self.day2SummaryText, font=("arial", 8), wraplength=100)
+        self.day2Summary.grid(column=6, row=0, rowspan=3)
 
         # Day 3 widgets
         self.day3Name = ttk.Label(self.day3Frame, textvariable=self.day3NameText, font=("arial", 12, "bold"))
@@ -221,8 +265,8 @@ class Window(ttk.Frame):
         self.day3SetPhoto.grid(column=5, row=1, padx=5)
         self.day3Set = ttk.Label(self.day3Frame, textvariable=self.day3SetText, font=("arial", 18, "bold"))
         self.day3Set.grid(column=5, row=2, padx=5)
-        self.day3Summery = ttk.Label(self.day3Frame, textvariable=self.day3SummeryText, font=("arial", 8), wraplength=100)
-        self.day3Summery.grid(column=6, row=0, rowspan=3)
+        self.day3Summary = ttk.Label(self.day3Frame, textvariable=self.day3SummaryText, font=("arial", 8), wraplength=100)
+        self.day3Summary.grid(column=6, row=0, rowspan=3)
 
         # Day 4 widgets
         self.day4Name = ttk.Label(self.day4Frame, textvariable=self.day4NameText, font=("arial", 12, "bold"))
@@ -241,8 +285,8 @@ class Window(ttk.Frame):
         self.day4SetPhoto.grid(column=5, row=1, padx=5)
         self.day4Set = ttk.Label(self.day4Frame, textvariable=self.day4SetText, font=("arial", 18, "bold"))
         self.day4Set.grid(column=5, row=2, padx=5)
-        self.day4Summery = ttk.Label(self.day4Frame, textvariable=self.day4SummeryText, font=("arial", 8), wraplength=100)
-        self.day4Summery.grid(column=6, row=0, rowspan=3)
+        self.day4Summary = ttk.Label(self.day4Frame, textvariable=self.day4SummaryText, font=("arial", 8), wraplength=100)
+        self.day4Summary.grid(column=6, row=0, rowspan=3)
 
 
         # Setting the frames
@@ -296,7 +340,7 @@ def VarSet():
     app.currentTempText.set(str(round(content["currently"]["temperature"],roundto)) + tempMeasurement)
     app.apparentTempText.set(str(round(content["currently"]["apparentTemperature"],roundto)) + tempMeasurement)
     app.currentPhotoImageText.set(content["currently"]["icon"])
-    app.currentSummeryText.set(content["minutely"]["summary"])
+    app.currentSummaryText.set(content["minutely"]["summary"])
 
     #Day0 values
     app.day0NameText.set(datetime.datetime.fromtimestamp(content["daily"]["data"][0]["time"]).strftime("%a"))
@@ -306,7 +350,7 @@ def VarSet():
     app.day0MaxText.set("Max:\n" + str(round(content["daily"]["data"][0]["temperatureHigh"],roundto)))
     app.day0RiseText.set(datetime.datetime.fromtimestamp(content["daily"]["data"][0]["sunriseTime"]).strftime("%I:%M"))
     app.day0SetText.set(datetime.datetime.fromtimestamp(content["daily"]["data"][0]["sunsetTime"]).strftime("%I:%M"))
-    app.day0SummeryText.set(content["daily"]["data"][0]["summary"])
+    app.day0SummaryText.set(content["daily"]["data"][0]["summary"])
 
     #Day1 values
     app.day1NameText.set(datetime.datetime.fromtimestamp(content["daily"]["data"][1]["time"]).strftime("%a"))
@@ -316,7 +360,7 @@ def VarSet():
     app.day1MaxText.set("Max:\n" + str(round(content["daily"]["data"][1]["temperatureHigh"],roundto)))
     app.day1RiseText.set(datetime.datetime.fromtimestamp(content["daily"]["data"][1]["sunriseTime"]).strftime("%I:%M"))
     app.day1SetText.set(datetime.datetime.fromtimestamp(content["daily"]["data"][1]["sunsetTime"]).strftime("%I:%M"))
-    app.day1SummeryText.set(content["daily"]["data"][1]["summary"])
+    app.day1SummaryText.set(content["daily"]["data"][1]["summary"])
 
     #Day2 values
     app.day2NameText.set(datetime.datetime.fromtimestamp(content["daily"]["data"][2]["time"]).strftime("%a"))
@@ -326,7 +370,7 @@ def VarSet():
     app.day2MaxText.set("Max:\n" + str(round(content["daily"]["data"][2]["temperatureHigh"],roundto)))
     app.day2RiseText.set(datetime.datetime.fromtimestamp(content["daily"]["data"][2]["sunriseTime"]).strftime("%I:%M"))
     app.day2SetText.set(datetime.datetime.fromtimestamp(content["daily"]["data"][2]["sunsetTime"]).strftime("%I:%M"))
-    app.day2SummeryText.set(content["daily"]["data"][2]["summary"])
+    app.day2SummaryText.set(content["daily"]["data"][2]["summary"])
 
     #Day3 values
     app.day3NameText.set(datetime.datetime.fromtimestamp(content["daily"]["data"][3]["time"]).strftime("%a"))
@@ -336,7 +380,7 @@ def VarSet():
     app.day3MaxText.set("Max:\n" + str(round(content["daily"]["data"][3]["temperatureHigh"],roundto)))
     app.day3RiseText.set(datetime.datetime.fromtimestamp(content["daily"]["data"][3]["sunriseTime"]).strftime("%I:%M"))
     app.day3SetText.set(datetime.datetime.fromtimestamp(content["daily"]["data"][3]["sunsetTime"]).strftime("%I:%M"))
-    app.day3SummeryText.set(content["daily"]["data"][3]["summary"])
+    app.day3SummaryText.set(content["daily"]["data"][3]["summary"])
 
     #Day4 values
     app.day4NameText.set(datetime.datetime.fromtimestamp(content["daily"]["data"][4]["time"]).strftime("%a"))
@@ -346,7 +390,7 @@ def VarSet():
     app.day4MaxText.set("Max:\n" + str(round(content["daily"]["data"][4]["temperatureHigh"],roundto)))
     app.day4RiseText.set(datetime.datetime.fromtimestamp(content["daily"]["data"][4]["sunriseTime"]).strftime("%I:%M"))
     app.day4SetText.set(datetime.datetime.fromtimestamp(content["daily"]["data"][4]["sunsetTime"]).strftime("%I:%M"))
-    app.day4SummeryText.set(content["daily"]["data"][4]["summary"])
+    app.day4SummaryText.set(content["daily"]["data"][4]["summary"])
 
 def openApiLink(event):
     webbrowser.open("https://darksky.net/poweredby/")
