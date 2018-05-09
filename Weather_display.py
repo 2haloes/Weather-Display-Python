@@ -146,7 +146,7 @@ def VarSet():
     # This attempts to get the data, if it fails, it tries again on the next loop around
     try:
         #content = json.loads(open("darksky_file.json").read())
-        content = json.loads(requests.get("https://api.darksky.net/forecast/" + DarkSkyConfig.ApiKey + "/" + DarkSkyConfig.Lat + "," + DarkSkyConfig.Long + "?units=" + DarkSkyConfig.Units).text)
+        content = json.loads(requests.get("https://api.darksky.net/forecast/" + DarkSkyConfig.ApiKey + "/" + DarkSkyConfig.Lat + "," + DarkSkyConfig.Long + "?units=" + DarkSkyConfig.Units + "&language=" + DarkSkyConfig.Language).text)
         tempMeasurement = ""
         roundto = 0
         if content["flags"]["units"] == "us":

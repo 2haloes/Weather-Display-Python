@@ -11,3 +11,5 @@ Long = "0.0" #Insert Longitude here
 Units = "auto"
 # API key, keep this hidden, to aquire this, you need to sign up to a Dev account on the DarkSky website (This program should do the rest of the work)
 ApiKey = ""
+# Language, this sets the language for the summaries, refer to the program wiki for possible inputs, defaults to English
+Language = "en"
